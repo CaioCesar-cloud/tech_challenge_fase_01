@@ -540,41 +540,57 @@
   <div class="code-block">
 <span class="an">@Entity</span>
 <span class="an">@Table</span>(name = <span class="st">"users"</span>)
-<span class="an">@Getter</span> <span class="an">@Setter</span> <span class="an">@NoArgsConstructor</span> <span class="an">@AllArgsConstructor</span> <span class="an">@Builder</span>
+<span class="an">@Getter</span>
+<span class="an">@Setter</span>
+<span class="an">@NoArgsConstructor</span>
+<span class="an">@AllArgsConstructor</span>
+<span class="an">@Builder</span>
 <span class="kw">public class</span> <span class="ty">User</span> {
 
     <span class="an">@Id</span>
     <span class="an">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)
     <span class="kw">private</span> <span class="ty">Long</span> <span class="fi">id</span>;
 
-    <span class="an">@NotBlank</span> <span class="an">@Size</span>(max = <span class="nu">100</span>)
+    <span class="an">@NotBlank</span>
+    <span class="an">@Size</span>(max = <span class="nu">100</span>)
     <span class="kw">private</span> <span class="ty">String</span> <span class="fi">nome</span>;
 
-    <span class="an">@NotBlank</span> <span class="an">@Email</span> <span class="an">@Size</span>(max = <span class="nu">150</span>)
+    <span class="an">@NotBlank</span>
+    <span class="an">@Email</span>
+    <span class="an">@Size</span>(max = <span class="nu">150</span>)
     <span class="an">@Column</span>(unique = <span class="kw">true</span>, nullable = <span class="kw">false</span>)
     <span class="kw">private</span> <span class="ty">String</span> <span class="fi">email</span>;
 
-    <span class="an">@NotBlank</span> <span class="an">@Size</span>(min = <span class="nu">3</span>, max = <span class="nu">50</span>)
+    <span class="an">@NotBlank</span>
+    <span class="an">@Size</span>(min = <span class="nu">3</span>, max = <span class="nu">50</span>)
     <span class="an">@Column</span>(unique = <span class="kw">true</span>, nullable = <span class="kw">false</span>)
     <span class="kw">private</span> <span class="ty">String</span> <span class="fi">login</span>;
 
     <span class="an">@NotBlank</span>
-    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">senha</span>;          <span class="cm">// sempre armazenada como hash BCrypt</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">senha</span>;    <span class="cm">// sempre armazenada como hash BCrypt</span>
 
     <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
     <span class="kw">private</span> <span class="ty">LocalDateTime</span> <span class="fi">dataUltimaAlteracao</span>;
 
-    <span class="an">@NotNull</span> <span class="an">@Enumerated</span>(EnumType.STRING) <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
+    <span class="an">@NotNull</span>
+    <span class="an">@Enumerated</span>(EnumType.STRING)
+    <span class="an">@Column</span>(nullable = <span class="kw">false</span>)
     <span class="kw">private</span> <span class="ty">UserType</span> <span class="fi">tipo</span>;
 
-    <span class="an">@NotNull</span> <span class="an">@Valid</span> <span class="an">@Embedded</span>
+    <span class="an">@NotNull</span>
+    <span class="an">@Valid</span>
+    <span class="an">@Embedded</span>
     <span class="kw">private</span> <span class="ty">Address</span> <span class="fi">endereco</span>;
 
     <span class="an">@PrePersist</span>
-    <span class="kw">public void</span> <span class="fi">prePersist</span>() { dataUltimaAlteracao = LocalDateTime.now(); }
+    <span class="kw">public void</span> <span class="fi">prePersist</span>() {
+        dataUltimaAlteracao = LocalDateTime.now();
+    }
 
     <span class="an">@PreUpdate</span>
-    <span class="kw">public void</span> <span class="fi">preUpdate</span>()  { dataUltimaAlteracao = LocalDateTime.now(); }
+    <span class="kw">public void</span> <span class="fi">preUpdate</span>() {
+        dataUltimaAlteracao = LocalDateTime.now();
+    }
 }
   </div>
 
@@ -623,19 +639,31 @@
   <div class="code-label">src/main/java/br/com/fiap/restaurante/model/Address.java</div>
   <div class="code-block">
 <span class="an">@Embeddable</span>
-<span class="an">@Builder</span> <span class="an">@NoArgsConstructor</span> <span class="an">@AllArgsConstructor</span>
+<span class="an">@Builder</span>
+<span class="an">@NoArgsConstructor</span>
+<span class="an">@AllArgsConstructor</span>
 <span class="kw">public class</span> <span class="ty">Address</span> {
 
-    <span class="an">@NotBlank</span>  <span class="kw">private</span> <span class="ty">String</span> <span class="fi">logradouro</span>;
-    <span class="an">@NotBlank</span>  <span class="kw">private</span> <span class="ty">String</span> <span class="fi">numero</span>;
-               <span class="kw">private</span> <span class="ty">String</span> <span class="fi">complemento</span>;   <span class="cm">// nullable — campo opcional</span>
-    <span class="an">@NotBlank</span>  <span class="kw">private</span> <span class="ty">String</span> <span class="fi">bairro</span>;
-    <span class="an">@NotBlank</span>  <span class="kw">private</span> <span class="ty">String</span> <span class="fi">cidade</span>;
-    <span class="an">@NotBlank</span>  <span class="kw">private</span> <span class="ty">String</span> <span class="fi">estado</span>;
+    <span class="an">@NotBlank</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">logradouro</span>;
+
+    <span class="an">@NotBlank</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">numero</span>;
+
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">complemento</span>;    <span class="cm">// nullable — campo opcional</span>
+
+    <span class="an">@NotBlank</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">bairro</span>;
+
+    <span class="an">@NotBlank</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">cidade</span>;
+
+    <span class="an">@NotBlank</span>
+    <span class="kw">private</span> <span class="ty">String</span> <span class="fi">estado</span>;
 
     <span class="an">@NotBlank</span>
     <span class="an">@Size</span>(max = <span class="nu">9</span>)
-    <span class="an">@Pattern</span>(regexp = <span class="st">"\\d{5}-?\\d{3}"</span>)   <span class="cm">// aceita "12345-678" ou "12345678"</span>
+    <span class="an">@Pattern</span>(regexp = <span class="st">"\\d{5}-?\\d{3}"</span>)    <span class="cm">// aceita "12345-678" ou "12345678"</span>
     <span class="kw">private</span> <span class="ty">String</span> <span class="fi">cep</span>;
 }
   </div>
@@ -872,22 +900,34 @@ V<span class="nu">3</span>__add_column_phone.sql
   <div class="code-label">src/main/resources/application.yml</div>
   <div class="code-block">
 spring:
+  application:
+    name: restaurante-usuarios
+
   datasource:
     url: jdbc:postgresql://<span class="st">${DB_HOST:localhost}</span>:<span class="st">${DB_PORT:5432}</span>/<span class="st">${DB_NAME:restaurante_db}</span>
     username: <span class="st">${DB_USER:postgres}</span>
     password: <span class="st">${DB_PASSWORD:postgres}</span>
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: <span class="an">validate</span>    <span class="cm"># Flyway cuida do schema — Hibernate só valida</span>
+      ddl-auto: <span class="an">validate</span>        <span class="cm"># Flyway é o responsável pelo schema</span>
+    show-sql: <span class="kw">false</span>
     properties:
       hibernate:
+        format_sql: <span class="kw">true</span>
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
     enabled: <span class="kw">true</span>
     locations: classpath:db/migration
     baseline-on-migrate: <span class="kw">true</span>
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
 
 server:
   port: <span class="st">${SERVER_PORT:8080}</span>
@@ -920,18 +960,21 @@ server:
   <div class="code-block">
 spring:
   datasource:
-    url: jdbc:h2:mem:restaurante_test;DB_CLOSE_DELAY=-<span class="nu">1</span>
+    url: jdbc:h2:mem:restaurante_test;DB_CLOSE_DELAY=-<span class="nu">1</span>;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
     driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
       ddl-auto: <span class="an">create-drop</span>   <span class="cm"># cria schema ao subir e destrói ao encerrar</span>
+    show-sql: <span class="kw">true</span>
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
 
   flyway:
-    enabled: <span class="kw">false</span>             <span class="cm"># H2 usa ddl-auto no perfil de teste</span>
+    enabled: <span class="kw">false</span>              <span class="cm"># H2 usa ddl-auto no perfil de teste</span>
 
   h2:
     console:
@@ -1070,7 +1113,7 @@ spring:
             .info(<span class="kw">new</span> <span class="ty">Info</span>()
                 .title(<span class="st">"Restaurante — Gestão de Usuários"</span>)
                 .version(<span class="st">"1.0"</span>)
-                .description(<span class="st">"API para cadastro e gerenciamento de usuários..."</span>));
+                .description(<span class="st">"API para cadastro e gerenciamento de usuários do sistema de restaurantes. POSTECH FIAP — Arquitetura e Desenvolvimento Java — Fase 1"</span>));
     }
 }
   </div>
