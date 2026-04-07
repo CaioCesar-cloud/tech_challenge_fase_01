@@ -71,13 +71,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- H2 (testes e desenvolvimento local sem Docker) -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- Flyway — migrações de banco -->
         <dependency>
             <groupId>org.flywaydb</groupId>

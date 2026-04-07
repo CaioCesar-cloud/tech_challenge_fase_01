@@ -24,10 +24,13 @@ Backend em Spring Boot para cadastro e gerenciamento de usuários de um sistema 
 
 ### Funcionalidades
 
-- Cadastro de usuário (com criptografia BCrypt)
-- Busca, atualização e exclusão (CRUD completo)
-- Troca de senha
+- Cadastro de usuário (com criptografia BCrypt e validação de e-mail único)
+- Busca por ID e busca por nome (parcial, case-insensitive)
+- Atualização de dados e exclusão (CRUD completo)
+- Troca de senha (endpoint separado)
 - Validação de login
+- Versionamento de API (`/api/v1`)
+- Tratamento de erros padronizado com ProblemDetail (RFC 7807)
 
 ---
 
@@ -85,14 +88,13 @@ docker compose down -v
 
 ## Como rodar localmente (sem Docker)
 
-```bash
-# Requer PostgreSQL rodando localmente ou use o perfil H2
-mvn spring-boot:run -Dspring-boot.run.profiles=test
-```
-
-Com PostgreSQL local, exporte as variáveis de ambiente antes:
+> **Atenção:** H2 não é aceito. É necessário ter o PostgreSQL rodando localmente ou subir apenas o banco via Docker.
 
 ```bash
+# Sobe apenas o banco de dados
+docker compose up postgres -d
+
+# Em seguida, rode a aplicação
 export DB_HOST=localhost DB_PORT=5432 DB_NAME=restaurante_db DB_USER=postgres DB_PASSWORD=postgres
 mvn spring-boot:run
 ```
@@ -101,14 +103,17 @@ mvn spring-boot:run
 
 ## Endpoints da API
 
+Todos os endpoints utilizam o prefixo `/api/v1`.
+
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| POST | `/usuarios` | Cadastrar novo usuário |
-| GET | `/usuarios/{id}` | Buscar usuário por ID |
-| PUT | `/usuarios/{id}` | Atualizar dados do usuário |
-| DELETE | `/usuarios/{id}` | Excluir usuário |
-| POST | `/usuarios/login` | Validar login |
-| PATCH | `/usuarios/{id}/senha` | Trocar senha |
+| POST | `/api/v1/usuarios` | Cadastrar novo usuário |
+| GET | `/api/v1/usuarios/{id}` | Buscar usuário por ID |
+| GET | `/api/v1/usuarios?nome=X` | Buscar usuários por nome (parcial) |
+| PUT | `/api/v1/usuarios/{id}` | Atualizar dados do usuário (sem senha) |
+| PATCH | `/api/v1/usuarios/{id}/senha` | Trocar senha |
+| DELETE | `/api/v1/usuarios/{id}` | Excluir usuário |
+| POST | `/api/v1/usuarios/login` | Validar login |
 
 > Documentação interativa completa: **http://localhost:8080/swagger-ui.html**
 
